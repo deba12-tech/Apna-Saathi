@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}Apna Saathi - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-orange-500 to-red-600 text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Connect with <span class="text-yellow-300">Reliable Suppliers</span>
+                </h1>
+                <p class="text-xl mb-8 text-orange-100">
+                    Apna Saathi helps Indian street food vendors find quality suppliers for fresh ingredients at affordable prices.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ url_for('signup') }}" class="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 text-center">
+                        <i class="fas fa-user-plus mr-2"></i>Join as Vendor
+                    </a>
+                    <a href="{{ url_for('signup') }}" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition duration-300 text-center">
+                        <i class="fas fa-store mr-2"></i>Join as Supplier
+                    </a>
+                </div>
+            </div>
+            <div class="hidden lg:block">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-white/20 rounded-lg p-4 text-center">
+                            <i class="fas fa-users text-3xl mb-2"></i>
+                            <h3 class="font-semibold">500+ Vendors</h3>
+                            <p class="text-sm text-orange-100">Registered</p>
+                        </div>
+                        <div class="bg-white/20 rounded-lg p-4 text-center">
+                            <i class="fas fa-truck text-3xl mb-2"></i>
+                            <h3 class="font-semibold">200+ Suppliers</h3>
+                            <p class="text-sm text-orange-100">Verified</p>
+                        </div>
+                        <div class="bg-white/20 rounded-lg p-4 text-center">
+                            <i class="fas fa-star text-3xl mb-2"></i>
+                            <h3 class="font-semibold">4.8 Rating</h3>
+                            <p class="text-sm text-orange-100">Average</p>
+                        </div>
+                        <div class="bg-white/20 rounded-lg p-4 text-center">
+                            <i class="fas fa-map-marker-alt text-3xl mb-2"></i>
+                            <h3 class="font-semibold">15 Cities</h3>
+                            <p class="text-sm text-orange-100">Covered</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Why Choose Apna Saathi?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                We provide comprehensive solutions to help street food vendors grow their business and connect with reliable suppliers.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-search text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Smart Supplier Matching</h3>
+                <p class="text-gray-600">
+                    Our AI-powered system matches you with the best suppliers based on location, quality, and price.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-camera text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">OCR Bill Upload</h3>
+                <p class="text-gray-600">
+                    Simply upload your bills and our system automatically extracts ingredients and finds matching suppliers.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-robot text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">AI Chatbot Assistant</h3>
+                <p class="text-gray-600">
+                    Get instant answers about suppliers, ingredients, storage tips, and business advice.
+                </p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-line text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Business Analytics</h3>
+                <p class="text-gray-600">
+                    Track your expenses, analyze supplier performance, and optimize your procurement strategy.
+                </p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-shield-alt text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Verified Suppliers</h3>
+                <p class="text-gray-600">
+                    All suppliers are verified with ratings, reviews, and quality certifications.
+                </p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-mobile-alt text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Mobile Friendly</h3>
+                <p class="text-gray-600">
+                    Access the platform from anywhere with our mobile-responsive design.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                How It Works
+            </h2>
+            <p class="text-xl text-gray-600">
+                Simple steps to connect with the best suppliers
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Step 1 -->
+            <div class="text-center">
+                <div class="bg-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                    1
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Sign Up</h3>
+                <p class="text-gray-600">
+                    Create your account as a vendor or supplier. Complete your profile with business details.
+                </p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="text-center">
+                <div class="bg-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                    2
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Upload Bills</h3>
+                <p class="text-gray-600">
+                    Upload your ingredient bills using our OCR technology to automatically extract items.
+                </p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="text-center">
+                <div class="bg-orange-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+                    3
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Get Matched</h3>
+                <p class="text-gray-600">
+                    Receive personalized supplier recommendations based on your needs and location.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                What Our Users Say
+            </h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">
+                    "Apna Saathi helped me find reliable suppliers for my street food business. The OCR feature saves me so much time!"
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold mr-3">
+                        RK
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Rajesh Kumar</h4>
+                        <p class="text-sm text-gray-500">Street Food Vendor, Mumbai</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">
+                    "As a supplier, Apna Saathi has increased my customer base significantly. The platform is very user-friendly."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold mr-3">
+                        SP
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Sunita Patel</h4>
+                        <p class="text-sm text-gray-500">Fresh Vegetables Supplier, Delhi</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="bg-gray-50 rounded-xl p-6">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">
+                    "The AI chatbot is amazing! It helps me with storage tips and supplier recommendations instantly."
+                </p>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold mr-3">
+                        AM
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Amit Mishra</h4>
+                        <p class="text-sm text-gray-500">Food Cart Owner, Bangalore</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-orange-500 to-red-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Transform Your Business?
+        </h2>
+        <p class="text-xl mb-8 text-orange-100">
+            Join thousands of vendors and suppliers who are already benefiting from Apna Saathi.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url_for('signup') }}" class="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-rocket mr-2"></i>Get Started Today
+            </a>
+            <a href="{{ url_for('about') }}" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition duration-300">
+                <i class="fas fa-info-circle mr-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %} 

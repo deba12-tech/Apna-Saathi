@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Apna Saathi - Connecting Street Food Vendors with Suppliers{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='1.0') }}">
+    
+    <!-- Language switcher script -->
+    <script>
+        // Language translations
+        const translations = {
+            'en': {
+                'home': 'Home',
+                'vendors': 'Vendors',
+                'suppliers': 'Suppliers',
+                'about': 'About',
+                'contact': 'Contact',
+                'login': 'Login',
+                'signup': 'Sign Up',
+                'dashboard': 'Dashboard',
+                'logout': 'Logout',
+                'chatbot_placeholder': 'Ask me anything about suppliers, ingredients, or business tips...',
+                'upload_bill': 'Upload Bill',
+                'language': 'Language'
+            },
+            'hi': {
+                'home': 'होम',
+                'vendors': 'विक्रेता',
+                'suppliers': 'आपूर्तिकर्ता',
+                'about': 'हमारे बारे में',
+                'contact': 'संपर्क',
+                'login': 'लॉगिन',
+                'signup': 'साइन अप',
+                'dashboard': 'डैशबोर्ड',
+                'logout': 'लॉगआउट',
+                'chatbot_placeholder': 'मुझसे आपूर्तिकर्ताओं, सामग्री या व्यवसाय के बारे में कुछ भी पूछें...',
+                'upload_bill': 'बिल अपलोड करें',
+                'language': 'भाषा'
+            }
+        };
+        
+        let currentLanguage = 'en';
+        
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateLanguage();
+        }
+        
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+        }
+        
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage();
+        });
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-orange-500 to-red-600 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="{{ url_for('index') }}" class="text-white text-2xl font-bold">
+                            <i class="fas fa-utensils mr-2"></i>Apna Saathi
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ url_for('index') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="home">Home</a>
+                        <a href="{{ url_for('vendors') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="vendors">Vendors</a>
+                        <a href="{{ url_for('suppliers') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="suppliers">Suppliers</a>
+                        <a href="{{ url_for('about') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="about">About</a>
+                        <a href="{{ url_for('contact') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="contact">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button onclick="toggleLanguageMenu()" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-globe mr-1"></i>
+                            <span data-translate="language">Language</span>
+                        </button>
+                        <div id="languageMenu" class="hidden absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-50">
+                            <a href="#" onclick="changeLanguage('en')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                            <a href="#" onclick="changeLanguage('hi')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">हिंदी</a>
+                        </div>
+                    </div>
+                    
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('dashboard') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="dashboard">Dashboard</a>
+                        <a href="{{ url_for('logout') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="logout">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="text-white hover:bg-orange-600 px-3 py-2 rounded-md text-sm font-medium" data-translate="login">Login</a>
+                        <a href="{{ url_for('signup') }}" class="bg-white text-orange-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium" data-translate="signup">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('index') }}" class="text-white hover:bg-orange-600 block px-3 py-2 rounded-md text-base font-medium" data-translate="home">Home</a>
+                <a href="{{ url_for('vendors') }}" class="text-white hover:bg-orange-600 block px-3 py-2 rounded-md text-base font-medium" data-translate="vendors">Vendors</a>
+                <a href="{{ url_for('suppliers') }}" class="text-white hover:bg-orange-600 block px-3 py-2 rounded-md text-base font-medium" data-translate="suppliers">Suppliers</a>
+                <a href="{{ url_for('about') }}" class="text-white hover:bg-orange-600 block px-3 py-2 rounded-md text-base font-medium" data-translate="about">About</a>
+                <a href="{{ url_for('contact') }}" class="text-white hover:bg-orange-600 block px-3 py-2 rounded-md text-base font-medium" data-translate="contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                {% for category, message in messages %}
+                    <div class="bg-{{ 'green' if category == 'success' else 'red' }}-100 border border-{{ 'green' if category == 'success' else 'red' }}-400 text-{{ 'green' if category == 'success' else 'red' }}-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- AI Chatbot -->
+    <div id="chatbot" class="fixed bottom-4 right-4 z-50">
+        <div id="chatbot-toggle" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-4 shadow-lg cursor-pointer">
+            <i class="fas fa-robot text-xl"></i>
+        </div>
+        
+        <div id="chatbot-window" class="hidden absolute bottom-16 right-0 w-80 h-96 bg-white rounded-lg shadow-xl border">
+            <div class="bg-orange-500 text-white p-4 rounded-t-lg">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-semibold">AI Assistant</h3>
+                    <button id="chatbot-close" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="chat-messages" class="h-64 overflow-y-auto p-4 space-y-3">
+                <div class="bg-gray-100 rounded-lg p-3">
+                    <p class="text-sm">Namaste! How can I help you with your street food business today?</p>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t">
+                <div class="flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <button id="chat-send" class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Apna Saathi</h3>
+                    <p class="text-gray-300">Connecting street food vendors with reliable suppliers across India.</p>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('vendors') }}" class="text-gray-300 hover:text-white">Vendors</a></li>
+                        <li><a href="{{ url_for('suppliers') }}" class="text-gray-300 hover:text-white">Suppliers</a></li>
+                        <li><a href="{{ url_for('about') }}" class="text-gray-300 hover:text-white">About Us</a></li>
+                        <li><a href="{{ url_for('contact') }}" class="text-gray-300 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-300">Supplier Matching</li>
+                        <li class="text-gray-300">OCR Bill Upload</li>
+                        <li class="text-gray-300">AI Chatbot</li>
+                        <li class="text-gray-300">Business Tips</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-md font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-300"><i class="fas fa-phone mr-2"></i>+91 98765 43210</li>
+                        <li class="text-gray-300"><i class="fas fa-envelope mr-2"></i>info@apnasaathi.com</li>
+                        <li class="text-gray-300"><i class="fas fa-map-marker-alt mr-2"></i>India</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 Apna Saathi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js', v='1.0') }}"></script>
+    <script>
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            console.error('Error details:', {
+                message: e.error.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno
+            });
+        });
+
+        // Language menu toggle
+        function toggleLanguageMenu() {
+            const menu = document.getElementById('languageMenu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        }
+        
+        // Close language menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('languageMenu');
+            if (menu) {
+                const button = event.target.closest('button');
+                if (!button || !button.onclick) {
+                    menu.classList.add('hidden');
+                }
+            }
+        });
+        
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotClose = document.getElementById('chatbot-close');
+        const chatSend = document.getElementById('chat-send');
+        const chatInput = document.getElementById('chat-input');
+        
+        if (chatbotToggle) {
+            chatbotToggle.addEventListener('click', function() {
+                const window = document.getElementById('chatbot-window');
+                if (window) {
+                    window.classList.toggle('hidden');
+                }
+            });
+        }
+        
+        if (chatbotClose) {
+            chatbotClose.addEventListener('click', function() {
+                const window = document.getElementById('chatbot-window');
+                if (window) {
+                    window.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Chat functionality
+        if (chatSend) {
+            chatSend.addEventListener('click', sendMessage);
+        }
+        
+        if (chatInput) {
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            if (!input) return;
+            
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Send to backend
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({message: message})
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    addMessage(data.response, 'bot');
+                })
+                .catch(error => {
+                    console.error('Chat error:', error);
+                    addMessage('Sorry, I encountered an error. Please try again.', 'bot');
+                });
+            }
+        }
+        
+        function addMessage(message, sender) {
+            const messagesDiv = document.getElementById('chat-messages');
+            if (!messagesDiv) return;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `rounded-lg p-3 ${sender === 'user' ? 'bg-orange-500 text-white ml-8' : 'bg-gray-100 mr-8'}`;
+            messageDiv.innerHTML = `<p class="text-sm">${message}</p>`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Debug logging
+        console.log('Base template JavaScript loaded');
+        console.log('Current user:', '{{ current_user.is_authenticated }}');
+        console.log('User role:', '{{ current_user.role if current_user.is_authenticated else "Not logged in" }}');
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

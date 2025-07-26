@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Debug - Apna Saathi{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Frontend Debug Page</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- JavaScript Tests -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">JavaScript Tests</h2>
+            <div id="js-tests" class="space-y-2">
+                <div class="p-2 bg-gray-100 rounded">
+                    <span class="font-medium">DOM Ready:</span>
+                    <span id="dom-ready" class="text-red-500">Testing...</span>
+                </div>
+                <div class="p-2 bg-gray-100 rounded">
+                    <span class="font-medium">Main.js Loaded:</span>
+                    <span id="main-js-loaded" class="text-red-500">Testing...</span>
+                </div>
+                <div class="p-2 bg-gray-100 rounded">
+                    <span class="font-medium">Chatbot Elements:</span>
+                    <span id="chatbot-elements" class="text-red-500">Testing...</span>
+                </div>
+                <div class="p-2 bg-gray-100 rounded">
+                    <span class="font-medium">API Test:</span>
+                    <span id="api-test" class="text-red-500">Testing...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Console Output</h2>
+            <div id="console-output" class="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm h-64 overflow-y-auto">
+                <div>Console output will appear here...</div>
+            </div>
+        </div>
+
+        <!-- Error Log -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Error Log</h2>
+            <div id="error-log" class="bg-red-50 text-red-700 p-4 rounded font-mono text-sm h-64 overflow-y-auto">
+                <div>Errors will appear here...</div>
+            </div>
+        </div>
+
+        <!-- Network Tests -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Network Tests</h2>
+            <div class="space-y-2">
+                <button onclick="testAPI('/api/suppliers')" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Test Suppliers API
+                </button>
+                <button onclick="testAPI('/api/vendors')" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Test Vendors API
+                </button>
+                <button onclick="testAPI('/api/chat')" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Test Chat API
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Override console methods to capture output
+const originalConsole = {
+    log: console.log,
+    error: console.error,
+    warn: console.warn
+};
+
+function addToConsole(type, message) {
+    const output = document.getElementById('console-output');
+    const div = document.createElement('div');
+    div.className = type === 'error' ? 'text-red-400' : type === 'warn' ? 'text-yellow-400' : 'text-green-400';
+    div.textContent = `[${type.toUpperCase()}] ${message}`;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+}
+
+function addToErrorLog(message) {
+    const output = document.getElementById('error-log');
+    const div = document.createElement('div');
+    div.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+}
+
+console.log = function(...args) {
+    originalConsole.log.apply(console, args);
+    addToConsole('log', args.join(' '));
+};
+
+console.error = function(...args) {
+    originalConsole.error.apply(console, args);
+    addToConsole('error', args.join(' '));
+    addToErrorLog(args.join(' '));
+};
+
+console.warn = function(...args) {
+    originalConsole.warn.apply(console, args);
+    addToConsole('warn', args.join(' '));
+};
+
+// Global error handler
+window.addEventListener('error', function(e) {
+    addToErrorLog(`JavaScript Error: ${e.error.message} at ${e.filename}:${e.lineno}`);
+});
+
+// Test functions
+function updateTestResult(elementId, success, message) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = message;
+        element.className = success ? 'text-green-500' : 'text-red-500';
+    }
+}
+
+function testAPI(endpoint) {
+    fetch(endpoint)
+        .then(response => {
+            updateTestResult('api-test', response.ok, `${endpoint}: ${response.status}`);
+        })
+        .catch(error => {
+            updateTestResult('api-test', false, `${endpoint}: ${error.message}`);
+        });
+}
+
+// Run tests when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    updateTestResult('dom-ready', true, '✓ DOM Ready');
+    
+    // Test if main.js is loaded
+    if (typeof window.ApnaSaathi !== 'undefined') {
+        updateTestResult('main-js-loaded', true, '✓ Main.js Loaded');
+    } else {
+        updateTestResult('main-js-loaded', false, '✗ Main.js Not Found');
+    }
+    
+    // Test chatbot elements
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatInput = document.getElementById('chat-input');
+    
+    if (chatbotToggle && chatbotWindow && chatInput) {
+        updateTestResult('chatbot-elements', true, '✓ All Chatbot Elements Found');
+    } else {
+        updateTestResult('chatbot-elements', false, '✗ Missing Chatbot Elements');
+    }
+    
+    console.log('Debug page loaded successfully');
+    console.log('User authenticated:', '{{ current_user.is_authenticated }}');
+    console.log('User role:', '{{ current_user.role if current_user.is_authenticated else "Not logged in" }}');
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Static Files Test - Apna Saathi{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Static Files Test</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- CSS Test -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">CSS Test</h2>
+            <div class="space-y-4">
+                <div class="p-4 bg-orange-100 text-orange-800 rounded-lg">
+                    <p class="font-medium">Custom CSS Test</p>
+                    <p class="text-sm">This should have orange background if CSS is loaded</p>
+                </div>
+                <div class="btn-primary">
+                    <p>Primary Button Style</p>
+                </div>
+                <div class="btn-secondary">
+                    <p>Secondary Button Style</p>
+                </div>
+                <div class="card-hover p-4 border rounded-lg">
+                    <p>Hover Card Effect</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript Test -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">JavaScript Test</h2>
+            <div class="space-y-4">
+                <button onclick="testUtils()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Test Utils
+                </button>
+                <button onclick="testAPI()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Test API
+                </button>
+                <button onclick="testStorage()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    Test Storage
+                </button>
+                <div id="test-results" class="p-4 bg-gray-100 rounded-lg">
+                    <p class="text-sm text-gray-600">Test results will appear here...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Loading Status -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">File Loading Status</h2>
+            <div class="space-y-2">
+                <div class="flex justify-between items-center p-2 bg-gray-100 rounded">
+                    <span>CSS File:</span>
+                    <span id="css-status" class="text-red-500">Checking...</span>
+                </div>
+                <div class="flex justify-between items-center p-2 bg-gray-100 rounded">
+                    <span>JS File:</span>
+                    <span id="js-status" class="text-red-500">Checking...</span>
+                </div>
+                <div class="flex justify-between items-center p-2 bg-gray-100 rounded">
+                    <span>Tailwind CSS:</span>
+                    <span id="tailwind-status" class="text-red-500">Checking...</span>
+                </div>
+                <div class="flex justify-between items-center p-2 bg-gray-100 rounded">
+                    <span>Font Awesome:</span>
+                    <span id="fontawesome-status" class="text-red-500">Checking...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Console Output</h2>
+            <div id="console-output" class="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm h-48 overflow-y-auto">
+                <div>Console output will appear here...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Override console to capture output
+const originalConsole = {
+    log: console.log,
+    error: console.error,
+    warn: console.warn
+};
+
+function addToConsole(type, message) {
+    const output = document.getElementById('console-output');
+    const div = document.createElement('div');
+    div.className = type === 'error' ? 'text-red-400' : type === 'warn' ? 'text-yellow-400' : 'text-green-400';
+    div.textContent = `[${type.toUpperCase()}] ${message}`;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+}
+
+console.log = function(...args) {
+    originalConsole.log.apply(console, args);
+    addToConsole('log', args.join(' '));
+};
+
+console.error = function(...args) {
+    originalConsole.error.apply(console, args);
+    addToConsole('error', args.join(' '));
+};
+
+console.warn = function(...args) {
+    originalConsole.warn.apply(console, args);
+    addToConsole('warn', args.join(' '));
+};
+
+// Test functions
+function testUtils() {
+    const results = document.getElementById('test-results');
+    try {
+        if (typeof window.ApnaSaathi !== 'undefined' && window.ApnaSaathi.Utils) {
+            const formatted = window.ApnaSaathi.Utils.formatCurrency(1234.56);
+            results.innerHTML = `<p class="text-green-600">✓ Utils working: ${formatted}</p>`;
+            console.log('Utils test passed');
+        } else {
+            results.innerHTML = '<p class="text-red-600">✗ Utils not found</p>';
+            console.error('Utils not found');
+        }
+    } catch (error) {
+        results.innerHTML = `<p class="text-red-600">✗ Utils error: ${error.message}</p>`;
+        console.error('Utils test failed:', error);
+    }
+}
+
+function testAPI() {
+    const results = document.getElementById('test-results');
+    try {
+        if (typeof window.ApnaSaathi !== 'undefined' && window.ApnaSaathi.API) {
+            results.innerHTML = '<p class="text-green-600">✓ API module found</p>';
+            console.log('API test passed');
+        } else {
+            results.innerHTML = '<p class="text-red-600">✗ API module not found</p>';
+            console.error('API module not found');
+        }
+    } catch (error) {
+        results.innerHTML = `<p class="text-red-600">✗ API error: ${error.message}</p>`;
+        console.error('API test failed:', error);
+    }
+}
+
+function testStorage() {
+    const results = document.getElementById('test-results');
+    try {
+        if (typeof window.ApnaSaathi !== 'undefined' && window.ApnaSaathi.Storage) {
+            window.ApnaSaathi.Storage.set('test', 'value');
+            const retrieved = window.ApnaSaathi.Storage.get('test');
+            results.innerHTML = `<p class="text-green-600">✓ Storage working: ${retrieved}</p>`;
+            console.log('Storage test passed');
+        } else {
+            results.innerHTML = '<p class="text-red-600">✗ Storage module not found</p>';
+            console.error('Storage module not found');
+        }
+    } catch (error) {
+        results.innerHTML = `<p class="text-red-600">✗ Storage error: ${error.message}</p>`;
+        console.error('Storage test failed:', error);
+    }
+}
+
+function updateStatus(elementId, success, message) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.textContent = message;
+        element.className = success ? 'text-green-500' : 'text-red-500';
+    }
+}
+
+// Check file loading status
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Static files test page loaded');
+    
+    // Check if custom CSS is loaded
+    const testElement = document.createElement('div');
+    testElement.className = 'btn-primary';
+    document.body.appendChild(testElement);
+    const computedStyle = window.getComputedStyle(testElement);
+    const hasCustomStyles = computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' || 
+                           computedStyle.padding !== '0px';
+    updateStatus('css-status', hasCustomStyles, hasCustomStyles ? '✓ Loaded' : '✗ Not loaded');
+    document.body.removeChild(testElement);
+    
+    // Check if main.js is loaded
+    if (typeof window.ApnaSaathi !== 'undefined') {
+        updateStatus('js-status', true, '✓ Loaded');
+    } else {
+        updateStatus('js-status', false, '✗ Not loaded');
+    }
+    
+    // Check if Tailwind is loaded
+    const tailwindTest = document.createElement('div');
+    tailwindTest.className = 'bg-blue-500 text-white p-4 rounded';
+    document.body.appendChild(tailwindTest);
+    const tailwindStyle = window.getComputedStyle(tailwindTest);
+    const hasTailwind = tailwindStyle.backgroundColor !== 'rgba(0, 0, 0, 0)';
+    updateStatus('tailwind-status', hasTailwind, hasTailwind ? '✓ Loaded' : '✗ Not loaded');
+    document.body.removeChild(tailwindTest);
+    
+    // Check if Font Awesome is loaded
+    const fontAwesomeTest = document.createElement('i');
+    fontAwesomeTest.className = 'fas fa-home';
+    document.body.appendChild(fontAwesomeTest);
+    const fontAwesomeStyle = window.getComputedStyle(fontAwesomeTest, '::before');
+    const hasFontAwesome = fontAwesomeStyle.content !== 'none';
+    updateStatus('fontawesome-status', hasFontAwesome, hasFontAwesome ? '✓ Loaded' : '✗ Not loaded');
+    document.body.removeChild(fontAwesomeTest);
+});
+</script>
+{% endblock %} 

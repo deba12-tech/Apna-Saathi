@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Apna Saathi{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center py-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Contact Us</h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Get in touch with our team for support, partnerships, or any questions about Apna Saathi.
+        </p>
+    </div>
+
+    <!-- Contact Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <!-- Contact Form -->
+        <div class="bg-white rounded-lg shadow p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+            
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <input type="tel" id="phone" name="phone"
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <div>
+                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                    <select id="subject" name="subject" required
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        <option value="">Select a subject</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="partnership">Partnership</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="complaint">Complaint</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5" required
+                              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                              placeholder="Tell us how we can help you..."></textarea>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition duration-300">
+                    <i class="fas fa-paper-plane mr-2"></i>Send Message
+                </button>
+            </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="space-y-8">
+            <!-- Quick Contact -->
+            <div class="bg-white rounded-lg shadow p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Quick Contact</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-phone text-orange-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Phone Support</p>
+                            <p class="text-gray-600">+91 98765 43210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-envelope text-orange-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Email Support</p>
+                            <p class="text-gray-600">support@apnasaathi.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-clock text-orange-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium">Business Hours</p>
+                            <p class="text-gray-600">Mon-Fri: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Categories -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">How Can We Help?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg shadow p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-question-circle text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">General Support</h3>
+                <p class="text-gray-600 text-sm mb-4">Questions about our platform and services</p>
+                <a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Get Help →</a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-tools text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Technical Issues</h3>
+                <p class="text-gray-600 text-sm mb-4">Platform bugs and technical problems</p>
+                <a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Report Issue →</a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-handshake text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Partnership</h3>
+                <p class="text-gray-600 text-sm mb-4">Business partnerships and collaborations</p>
+                <a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Partner With Us →</a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-lightbulb text-2xl text-orange-600"></i>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">Feature Request</h3>
+                <p class="text-gray-600 text-sm mb-4">Suggest new features and improvements</p>
+                <a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Suggest Feature →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
+        <div class="max-w-4xl mx-auto space-y-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-semibold text-lg mb-2">How do I register as a vendor?</h3>
+                <p class="text-gray-600">
+                    Simply click on "Sign Up" and select "Street Food Vendor" as your role. Fill in your business details and you'll be ready to connect with suppliers.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-semibold text-lg mb-2">How does the OCR bill upload work?</h3>
+                <p class="text-gray-600">
+                    Upload a photo of your ingredient bill and our AI will automatically extract the items listed. This helps us match you with the right suppliers.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-semibold text-lg mb-2">Is there a fee to use Apna Saathi?</h3>
+                <p class="text-gray-600">
+                    Basic registration and platform usage is free. We charge a small commission on successful transactions between vendors and suppliers.
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-semibold text-lg mb-2">How do I verify suppliers?</h3>
+                <p class="text-gray-600">
+                    All suppliers on our platform are verified through our quality assurance process. You can also check ratings and reviews from other vendors.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- CTA Section -->
+    <div class="bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl p-8 text-center text-white">
+        <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-xl mb-8 text-orange-100">
+            Join thousands of vendors and suppliers who are already benefiting from Apna Saathi
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url_for('signup') }}" class="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-rocket mr-2"></i>Join Now
+            </a>
+            <a href="{{ url_for('about') }}" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition duration-300">
+                <i class="fas fa-info-circle mr-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Contact form handling
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.querySelector('form');
+    
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        
+        // Basic validation
+        if (!data.firstName || !data.lastName || !data.email || !data.subject || !data.message) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        
+        // Simulate form submission
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+        submitBtn.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            this.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 2000);
+    });
+});
+</script>
+{% endblock %} 

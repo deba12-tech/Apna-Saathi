@@ -1,0 +1,573 @@
+{% extends "base.html" %}
+
+{% block title %}Suppliers - Apna Saathi{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Verified Suppliers</h1>
+        <p class="text-gray-600">Find reliable suppliers for your street food business</p>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Search Suppliers</label>
+                <input type="text" placeholder="Search by name or location..." 
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="">All Locations</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="chennai">Chennai</option>
+                    <option value="hyderabad">Hyderabad</option>
+                    <option value="siliguri">Siliguri</option>
+                    <option value="darjeeling">Darjeeling</option>
+                    <option value="jalpaiguri">Jalpaiguri</option>
+                    <option value="cooch behar">Cooch Behar</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Items</label>
+                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="">All Items</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="grains">Grains</option>
+                    <option value="spices">Spices</option>
+                </select>
+            </div>
+            <div class="flex items-end">
+                <button class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700">
+                    <i class="fas fa-search mr-2"></i>Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suppliers Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for supplier in suppliers %}
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">{{ supplier.business_name }}</h3>
+                        <p class="text-gray-500">{{ supplier.location }}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            {% for i in range(5) %}
+                                {% if i < supplier.rating|int %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <span class="text-sm text-gray-600">{{ supplier.rating }} ({{ supplier.total_ratings }} reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">{{ supplier.description or 'Quality supplier with reliable delivery.' }}</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        {% if supplier.items_list %}
+                            {% for item in supplier.items_list %}
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">{{ item }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-gray-500 text-sm">Contact for details</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>{{ supplier.address or 'Location available' }}
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!-- Sample Suppliers (when no data) -->
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Fresh Vegetables Co.</h3>
+                        <p class="text-gray-500">Mumbai</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.5 (25 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Fresh vegetables delivered daily with quality guarantee.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Carrot</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Mumbai Central, Mumbai
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Quality Foods Ltd.</h3>
+                        <p class="text-gray-500">Delhi</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.2 (18 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Quality dry goods and spices at competitive prices.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Rice</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flour</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Oil</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Spices</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Delhi Market, Delhi
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Mumbai Market Hub</h3>
+                        <p class="text-gray-500">Mumbai</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.8 (42 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">One-stop shop for all your ingredient needs.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Rice</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flour</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Mumbai Central, Mumbai
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Delhi Fresh Foods</h3>
+                        <p class="text-gray-500">Delhi</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.3 (31 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Fresh vegetables from Delhi markets with daily delivery.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Carrot</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Delhi Market, Delhi
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Bangalore Fresh</h3>
+                        <p class="text-gray-500">Bangalore</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.4 (22 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Fresh vegetables from Bangalore farms with organic options.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Carrot</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Bangalore Farms, Bangalore
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- West Bengal Suppliers -->
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Siliguri Fresh Market</h3>
+                        <p class="text-gray-500">Siliguri</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.6 (35 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Fresh vegetables and grains from Siliguri markets.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Carrot</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Rice</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flour</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Siliguri Market, Siliguri
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Darjeeling Organic Foods</h3>
+                        <p class="text-gray-500">Darjeeling</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.8 (28 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Organic vegetables and premium Darjeeling spices.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Carrot</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Spices</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tea</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Darjeeling Market, Darjeeling
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Jalpaiguri Wholesale Hub</h3>
+                        <p class="text-gray-500">Jalpaiguri</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.3 (19 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Wholesale supplier for all food ingredients.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Rice</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flour</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Oil</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Spices</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Jalpaiguri Market, Jalpaiguri
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-truck text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg">Cooch Behar Food Supply</h3>
+                        <p class="text-gray-500">Cooch Behar</p>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.5 (31 reviews)</span>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm mb-3">Complete food supply for street vendors.</p>
+                    
+                    <h4 class="font-medium text-gray-900 mb-2">Items Available:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Rice</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Flour</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Oil</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Spices</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Onion</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Tomato</span>
+                        <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Potato</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>Cooch Behar Market, Cooch Behar
+                    </div>
+                    <button class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 text-sm">
+                        <i class="fas fa-phone mr-1"></i>Contact
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="mt-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg p-8 text-center text-white">
+        <h2 class="text-2xl font-bold mb-4">Are You a Supplier?</h2>
+        <p class="text-lg mb-6 text-orange-100">Join our platform to reach more vendors and grow your business.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{{ url_for('signup') }}" class="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                <i class="fas fa-store mr-2"></i>Join as Supplier
+            </a>
+            <a href="{{ url_for('contact') }}" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition duration-300">
+                <i class="fas fa-info-circle mr-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('input[placeholder*="Search"]');
+    const supplierCards = document.querySelectorAll('.bg-white.rounded-lg.shadow');
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        supplierCards.forEach(card => {
+            const supplierName = card.querySelector('h3').textContent.toLowerCase();
+            const supplierLocation = card.querySelector('p.text-gray-500').textContent.toLowerCase();
+            
+            if (supplierName.includes(searchTerm) || supplierLocation.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 
