@@ -30,16 +30,6 @@
 
 ---
 
-## 🛠️ Built With
-
-- 💻 Python Flask (Backend)
-- 🎨 HTML, CSS, JS (Frontend)
-- ☁️ Firebase Auth
-- 🤖 AI / OCR APIs
-- 🗺️ Bootstrap & Vanilla JS
-
-
----
 
 ## 🧑‍🤝‍🧑 Team
 
